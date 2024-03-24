@@ -13,5 +13,5 @@ WidgetWrapper.defaultProps = {
   border: true,
   borderColor: 'decorativeBorders',
   background: 'alternativeBackground',
-  radius: 48,
+  radius: 'radius48',
 }

@@ -1,8 +1,10 @@
 import React from 'react'
 
+import { Footer } from 'app/(website)/components/Footer/Footer'
 import { Menu } from 'app/(website)/components/Menu/Menu'
 import { PageWrapper } from 'app/(website)/components/styles'
 import { GetInTouch } from 'components/GetInTouch/GetInTouch'
+import { Stack } from 'components/ui'
 import StyledComponentsRegistry from 'lib/registry'
 import type { Metadata } from 'next'
 import ThemeProvider from 'theme/ThemeProvider'
@@ -28,8 +30,13 @@ export default function RootLayout({
           <body className={inter.className}>
             <PageWrapper padding="spacing48">
               <Menu />
-              <main>{children}</main>
-              <GetInTouch />
+              <Stack gap="spacing96">
+                <main>{children}</main>
+                <Stack gap="spacing48">
+                  <GetInTouch />
+                  <Footer />
+                </Stack>
+              </Stack>
             </PageWrapper>
           </body>
         </html>

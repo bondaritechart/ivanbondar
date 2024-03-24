@@ -3,8 +3,25 @@
 import { CSSProperties } from 'react'
 
 import { getSpacings } from 'components/ui/utils'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Spacing } from 'theme'
+
+const createTemplate = (values: Array<number | string>, templateRepeat: string) => {
+  let styles = ''
+  const { length } = values
+  const nValue = templateRepeat === 'last' ? '' : String(length)
+  for (let i = 0; i < length; i++) {
+    styles += `
+      > :nth-child(${nValue}n + ${i + 1}) {
+        flex: ${values[i]};
+      }
+    `
+  }
+
+  return css`
+    ${styles}
+  `
+}
 
 export interface FlexProps {
   direction?: CSSProperties['flexDirection']
@@ -13,6 +30,8 @@ export interface FlexProps {
   flex?: CSSProperties['flex']
   wrap?: CSSProperties['flexWrap']
   gap?: Spacing
+  template?: Array<number | string>
+  templateRepeat?: 'last' | 'group'
 }
 
 export const Flex = styled.div<FlexProps>`
@@ -23,4 +42,5 @@ export const Flex = styled.div<FlexProps>`
   ${({ justify }) => justify && `justify-content: ${justify};`}
   ${({ flex }) => flex && `flex: ${flex};`}
   ${({ wrap }) => wrap && `flex-wrap: ${wrap};`}
+  ${({ template, templateRepeat }) => template && createTemplate(template, templateRepeat || 'group')};
 `

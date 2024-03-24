@@ -11,3 +11,9 @@ GetInTouchWrapper.defaultProps = {
   padding: 'spacing56',
   height: 56,
 }
+
+export const Icon = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.decorativeBorders};
+  border-radius: ${({ theme }) => theme.radius.radius16};
+  padding: ${({ theme }) => theme.spacing.spacing12 + ' ' + theme.spacing.spacing24};
+`

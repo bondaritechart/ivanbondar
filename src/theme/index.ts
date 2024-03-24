@@ -17,6 +17,7 @@ export const theme = {
   },
   radius: {
     radius16: '1.6rem',
+    radius48: '4.8rem',
   },
 }
 

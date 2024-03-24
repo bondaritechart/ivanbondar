@@ -25,7 +25,7 @@ export const Menu = () => {
   return (
     <MenuWrapper
       padding={['spacing24', 'spacing56']}
-      radius={48}
+      radius="radius48"
       background="alternativeBackground04"
       borderColor="decorativeBorders"
       border
@@ -47,7 +47,9 @@ export const Menu = () => {
                 )
               })}
             </List>
-            <Button>Get in Touch</Button>
+            <Button as="a" href="#get-in-touch">
+              Get in Touch
+            </Button>
           </Flex>
         </Flex>
       </nav>
