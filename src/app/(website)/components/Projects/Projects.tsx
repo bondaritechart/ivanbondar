@@ -4,7 +4,7 @@ import { projects } from 'data/projects'
 
 export const Projects = () => {
   return (
-    <Stack gap="spacing24">
+    <Stack gap="spacing24" id="portfolio">
       {projects.map((project) => {
         return <ProjectCard key={project.id} project={project} />
       })}

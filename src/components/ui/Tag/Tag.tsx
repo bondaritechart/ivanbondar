@@ -7,7 +7,7 @@ interface TagProps extends PropsWithChildren {}
 
 export const Tag = ({ children }: TagProps) => {
   return (
-    <Box radius={24} padding={['spacing4', 'spacing12']} background="nonDecorativeBorders">
+    <Box radius="radius24" padding={['spacing4', 'spacing12']} background="nonDecorativeBorders">
       <Text type="small" color="mainBackground">
         {children}
       </Text>

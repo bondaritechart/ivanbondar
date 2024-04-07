@@ -1,7 +1,7 @@
 import { css } from 'styled-components'
 
 export const heading1 = css`
-  font-weight: 700;
+  font-weight: 600;
   font-size: 6.4rem;
   line-height: 1.2;
 `

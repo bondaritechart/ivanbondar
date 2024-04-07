@@ -8,16 +8,17 @@ import Logo from 'assets/images/logo.svg'
 
 const LINKS = [
   {
-    href: Routes.CV,
+    href: '/ivan_bondar_cv.pdf',
     label: 'CV',
+    target: '_blank',
   },
   {
     href: Routes.PORTFOLIO,
     label: 'Portfolio',
   },
   {
-    href: Routes.ABOUT,
-    label: 'About me',
+    href: Routes.CAREER,
+    label: 'Career',
   },
 ]
 
@@ -40,7 +41,7 @@ export const Menu = () => {
               {LINKS.map((link) => {
                 return (
                   <li key={link.href}>
-                    <Link href={link.href}>
+                    <Link href={link.href} target={link.target}>
                       <Button variant="transparent">{link.label}</Button>
                     </Link>
                   </li>

@@ -12,7 +12,9 @@ export const ProjectCard = ({ project }: { project: Project }) => {
         <Stack align="flex-start" gap="spacing8">
           <Tag>{project.tag}</Tag>
           <Stack gap="spacing24">
-            <Text type="heading2">{project.cardTitle}</Text>
+            <Text type="heading2" color="headingText">
+              {project.cardTitle}
+            </Text>
             <Text>{project.cardDescription}</Text>
           </Stack>
         </Stack>

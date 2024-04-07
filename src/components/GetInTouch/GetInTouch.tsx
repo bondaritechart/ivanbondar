@@ -36,7 +36,9 @@ export const GetInTouch = () => {
     <WidgetWrapper padding="spacing56" height={48} id="get-in-touch">
       <Flex align="end" gap="spacing48" template={[1, 1]}>
         <Stack gap="spacing24">
-          <Text type="heading2">Get in Touch</Text>
+          <Text type="heading1" color="headingText">
+            Get in Touch
+          </Text>
           <Text>
             Feel free to reach out. I&apos;m always happy to chat and discuss ideas, feasibility, schedule, and other
             related topics. If you have any questions or just want to say hi, that&apos;s cool too.
