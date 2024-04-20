@@ -19,7 +19,7 @@ export interface Project {
   image: StaticImageData
 }
 
-export const projects: Project[] = [
+export const PROJECTS: Project[] = [
   {
     id: 1,
     cardTitle: 'Keeps',

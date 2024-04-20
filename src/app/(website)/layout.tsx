@@ -28,7 +28,7 @@ export default function RootLayout({
         <GlobalStyles />
         <html lang="en">
           <body className={inter.className}>
-            <PageWrapper padding="spacing48">
+            <PageWrapper>
               <Menu />
               <Stack gap="spacing96">
                 <main>{children}</main>

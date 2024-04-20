@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Stack, Text } from 'components/ui'
 import { ListStyled } from 'components/ui/List/List.styles'
 import { WidgetWrapper } from 'components/ui/WidgetWrapper/WidgetWrapper'
+import { CAREER } from 'data/career'
 
 import image from 'assets/images/about-hero.svg'
 
@@ -23,45 +24,30 @@ const AboutPage = () => {
           </Box>
         </Flex>
       </WidgetWrapper>
-      <WidgetWrapper padding="spacing56">
-        <Stack gap="spacing24">
-          <Flex align="flex-start" justify="space-between">
-            <Stack>
-              <Text type="heading3" color="headingText">
-                SENIOR SOFTWARE ENGINEER
-              </Text>
-              <Text>Vention</Text>
+      {CAREER.map((job) => {
+        return (
+          <WidgetWrapper key={job.title} padding="spacing56">
+            <Stack gap="spacing24">
+              <Flex align="flex-start" justify="space-between">
+                <Stack>
+                  <Text type="heading3" color="headingText">
+                    {job.title}
+                  </Text>
+                  <Text>{job.company}</Text>
+                </Stack>
+                <Text>{job.date}</Text>
+              </Flex>
+              <ListStyled>
+                {job.description.map((item, index) => (
+                  <li key={index}>
+                    <Text>{item}</Text>
+                  </li>
+                ))}
+              </ListStyled>
             </Stack>
-            <Text>2021 - present</Text>
-          </Flex>
-          <ListStyled>
-            <li>
-              <Text>
-                Led the frontend development team in architecting and implementing user interfaces for large-scale web
-                applications, ensuring alignment with project goals and technical requirements.
-              </Text>
-            </li>
-            <li>
-              <Text>
-                Collaborated with cross-functional teams including designers, backend developers, and product managers
-                to gather requirements, provide technical guidance, and deliver high-quality frontend solutions.
-              </Text>
-            </li>
-            <li>
-              <Text>
-                Mentored junior developers, conducted code reviews, and established coding standards and best practices
-                to maintain code quality and improve team efficiency.
-              </Text>
-            </li>
-            <li>
-              <Text>
-                Refactored legacy frontend codebases to improve maintainability, scalability, and testability, reducing
-                technical debt and enhancing development velocity.
-              </Text>
-            </li>
-          </ListStyled>
-        </Stack>
-      </WidgetWrapper>
+          </WidgetWrapper>
+        )
+      })}
     </Stack>
   )
 }
