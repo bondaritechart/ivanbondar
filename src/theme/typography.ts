@@ -1,9 +1,13 @@
 import { css } from 'styled-components'
+import { smallDevice } from 'theme/index'
 
 export const heading1 = css`
   font-weight: 600;
   font-size: 6.4rem;
   line-height: 1.2;
+  ${smallDevice} {
+    font-size: 4.8rem;
+  }
 `
 export const heading2 = css`
   font-weight: 600;

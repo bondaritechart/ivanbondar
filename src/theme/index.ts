@@ -10,6 +10,7 @@ export const theme = {
     spacing16: '1.6rem',
     spacing24: '2.4rem',
     spacing32: '3.2rem',
+    spacing40: '4rem',
     spacing48: '4.8rem',
     spacing56: '5.6rem',
     spacing96: '9.6rem',
@@ -33,3 +34,4 @@ export type Theme = typeof theme
 export type Spacing = keyof typeof theme.spacing
 
 export const smallDevice = `@media (max-width: ${theme.breakpoints.desktop - 1}px)`
+export const largeDevice = `@media (min-width: ${theme.breakpoints.desktop}px)`

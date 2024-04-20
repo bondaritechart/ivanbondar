@@ -10,8 +10,8 @@ export interface BoxProps {
   padding?: Padding
   border?: boolean
   radius?: keyof DefaultTheme['radius']
-  width?: number
-  height?: number
+  width?: number | string
+  height?: number | string
   borderColor?: keyof DefaultTheme['colors']
   background?: keyof DefaultTheme['colors']
 }
@@ -22,6 +22,6 @@ export const Box = styled.div<BoxProps>`
   ${({ radius, theme }) => radius && `border-radius: ${theme.radius[radius]};`}
   ${({ background, theme }) => background && `background: ${theme.colors[background]};`}
   ${({ borderColor, theme }) => borderColor && `border-color: ${theme.colors[borderColor]};`}
-  ${({ width }) => width && `width: ${width}rem;`}
-  ${({ height }) => height && `height: ${height}rem;`}
+  ${({ width }) => (width ? (typeof width === 'number' ? `width: ${width}rem;` : `width: ${width};`) : '')}
+  ${({ height }) => (height ? (typeof height === 'number' ? `height: ${height}rem;` : `height: ${height};`) : '')}
 `

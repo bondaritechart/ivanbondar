@@ -26,6 +26,7 @@ const createTemplate = (values: Array<number | string>, templateRepeat: string) 
 export interface FlexProps {
   direction?: CSSProperties['flexDirection']
   align?: CSSProperties['alignItems']
+  alignSelf?: CSSProperties['alignSelf']
   justify?: CSSProperties['justifyContent']
   flex?: CSSProperties['flex']
   wrap?: CSSProperties['flexWrap']
@@ -39,6 +40,7 @@ export const Flex = styled.div<FlexProps>`
   ${({ gap, theme }) => gap && `gap: ${getSpacings(gap, theme)};`};
   ${({ direction }) => direction && `flex-direction: ${direction};`}
   ${({ align }) => align && `align-items: ${align};`}
+  ${({ alignSelf }) => alignSelf && `align-self: ${alignSelf};`}
   ${({ justify }) => justify && `justify-content: ${justify};`}
   ${({ flex }) => flex && `flex: ${flex};`}
   ${({ wrap }) => wrap && `flex-wrap: ${wrap};`}

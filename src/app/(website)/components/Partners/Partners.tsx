@@ -1,4 +1,7 @@
+'use client'
+
 import { Flex, Image, Stack, Text } from 'components/ui'
+import { useMediaQuery } from 'hooks/useMediaQuery'
 
 import coverwallet from 'assets/images/partners/coverwallet.svg'
 import elemy from 'assets/images/partners/elemy.svg'
@@ -30,14 +33,21 @@ const PARTNERS = [
 ]
 
 export const Partners = () => {
+  const { isSmall } = useMediaQuery()
+
   return (
     <Stack gap="spacing32">
       <Text as="h3" align="center" type="heading3">
         Some companies I&apos;ve worked with
       </Text>
-      <Flex align="center" justify="space-between" wrap="wrap">
+      <Flex
+        gap={isSmall ? 'spacing24' : undefined}
+        align="center"
+        justify={isSmall ? 'space-around' : 'space-between'}
+        wrap="wrap"
+      >
         {PARTNERS.map(({ img, label }) => (
-          <Image alt={label} key={label} src={img.src} width={img.width} height={img.height} />
+          <Image alt={label} key={label} src={img.src} width={img.width} height={isSmall ? 35 : img.height} />
         ))}
       </Flex>
     </Stack>

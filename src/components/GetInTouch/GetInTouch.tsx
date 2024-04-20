@@ -7,6 +7,7 @@ import { Email } from 'components/ui/icons/Email'
 import { Github } from 'components/ui/icons/Github'
 import { LinkedIn } from 'components/ui/icons/LinkedIn'
 import { Whatsapp } from 'components/ui/icons/Whatsapp'
+import { useMediaQuery } from 'hooks/useMediaQuery'
 
 const GET_IN_TOUCH_LINKS = [
   {
@@ -32,9 +33,20 @@ const GET_IN_TOUCH_LINKS = [
 ]
 
 export const GetInTouch = () => {
+  const { isSmall } = useMediaQuery()
+
   return (
-    <WidgetWrapper padding="spacing56" height={48} id="get-in-touch">
-      <Flex align="end" gap="spacing48" template={[1, 1]}>
+    <WidgetWrapper
+      padding={isSmall ? ['spacing96', 'spacing24'] : 'spacing56'}
+      height={isSmall ? 'auto' : 56}
+      id="get-in-touch"
+    >
+      <Flex
+        direction={isSmall ? 'column' : 'row'}
+        align={isSmall ? 'flex-start' : 'flex-end'}
+        gap="spacing48"
+        template={[1, 1]}
+      >
         <Stack gap="spacing24">
           <Text type="heading1" color="headingText">
             Get in Touch
@@ -44,7 +56,7 @@ export const GetInTouch = () => {
             related topics. If you have any questions or just want to say hi, that&apos;s cool too.
           </Text>
         </Stack>
-        <Flex justify="end" gap="spacing16">
+        <Flex justify={isSmall ? 'flex-start' : 'flex-end'} gap="spacing16">
           {GET_IN_TOUCH_LINKS.map((props) => (
             <IconLink key={props.href} target="_blank" {...props} />
           ))}

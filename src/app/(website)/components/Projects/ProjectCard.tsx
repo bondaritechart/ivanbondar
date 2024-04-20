@@ -4,11 +4,19 @@ import { Flex, Image, Stack, Text } from 'components/ui'
 import { Tag } from 'components/ui/Tag/Tag'
 import { WidgetWrapper } from 'components/ui/WidgetWrapper/WidgetWrapper'
 import { Project } from 'data/projects'
+import { useMediaQuery } from 'hooks/useMediaQuery'
 
 export const ProjectCard = ({ project }: { project: Project }) => {
+  const { isSmall } = useMediaQuery()
+
   return (
-    <WidgetWrapper padding="spacing56" height={56}>
-      <Flex template={[1, 1]} align="flex-end" gap="spacing120">
+    <WidgetWrapper padding={isSmall ? ['spacing40', 'spacing24'] : 'spacing56'} height={isSmall ? 'auto' : 56}>
+      <Flex
+        direction={isSmall ? 'column-reverse' : 'row'}
+        template={[1, 1]}
+        align={isSmall ? 'flex-start' : 'flex-end'}
+        gap={isSmall ? 'spacing24' : 'spacing120'}
+      >
         <Stack align="flex-start" gap="spacing8">
           <Tag>{project.tag}</Tag>
           <Stack gap="spacing24">
@@ -18,8 +26,8 @@ export const ProjectCard = ({ project }: { project: Project }) => {
             <Text>{project.cardDescription}</Text>
           </Stack>
         </Stack>
-        <Flex justify="center">
-          <Image {...project.image} alt={project.cardTitle} />
+        <Flex alignSelf={isSmall ? 'center' : 'flex-end'} justify="center">
+          <Image {...project.image} height={isSmall ? 215 : project.image.height} alt={project.cardTitle} />
         </Flex>
       </Flex>
     </WidgetWrapper>

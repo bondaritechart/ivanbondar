@@ -3,13 +3,21 @@
 import { CopyWrapper } from 'app/(website)/components/HeroHeader/HeroHeader.styles'
 import { Flex, Image, Stack, Text } from 'components/ui'
 import { WidgetWrapper } from 'components/ui/WidgetWrapper/WidgetWrapper'
+import { useMediaQuery } from 'hooks/useMediaQuery'
 
 import heroImg from 'assets/images/hero-img.svg'
 
 export const HeroHeader = () => {
+  const { isSmall } = useMediaQuery()
+
   return (
-    <WidgetWrapper height={64} padding="spacing56">
-      <Flex justify="space-between" align="flex-end">
+    <WidgetWrapper height={isSmall ? 'auto' : 64} padding={isSmall ? ['spacing40', 'spacing24'] : 'spacing56'}>
+      <Flex
+        direction={isSmall ? 'column-reverse' : 'row'}
+        justify="space-between"
+        align={isSmall ? 'flex-start' : 'flex-end'}
+        gap="spacing24"
+      >
         <CopyWrapper gap="spacing24">
           <Stack gap="spacing8">
             <Text type="body">Hey, I&apos;m Ivan</Text>
@@ -22,9 +30,9 @@ export const HeroHeader = () => {
             applications. My creed is to combine creativity and technical expertise to achieve your goals.
           </Text>
         </CopyWrapper>
-        <Stack>
-          <Image src={heroImg.src} width={heroImg.width} height={heroImg.height} alt="hero-image" />
-        </Stack>
+        <Flex alignSelf={isSmall ? 'center' : undefined}>
+          <Image src={heroImg.src} width={heroImg.width} height={isSmall ? 210 : heroImg.height} alt="hero-image" />
+        </Flex>
       </Flex>
     </WidgetWrapper>
   )

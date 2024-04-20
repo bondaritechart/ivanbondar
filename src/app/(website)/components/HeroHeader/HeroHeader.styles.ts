@@ -2,7 +2,10 @@
 
 import { Stack } from 'components/ui'
 import styled from 'styled-components'
+import { largeDevice } from 'theme'
 
 export const CopyWrapper = styled(Stack)`
-  max-width: 600px;
+  ${largeDevice} {
+    max-width: 600px;
+  }
 `
