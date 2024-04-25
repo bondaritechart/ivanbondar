@@ -31,7 +31,13 @@ export const HeroHeader = () => {
           </Text>
         </CopyWrapper>
         <Flex alignSelf={isSmall ? 'center' : undefined}>
-          <Image src={heroImg.src} width={heroImg.width} height={isSmall ? 210 : heroImg.height} alt="hero-image" />
+          <Image
+            responsive={isSmall}
+            src={heroImg.src}
+            width={heroImg.width}
+            height={heroImg.height}
+            alt="hero-image"
+          />
         </Flex>
       </Flex>
     </WidgetWrapper>

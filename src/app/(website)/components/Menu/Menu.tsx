@@ -31,9 +31,9 @@ export const Menu = () => {
 
   return (
     <MenuWrapper
-      padding={['spacing24', 'spacing56']}
-      radius="radius48"
-      background={isSmall ? undefined : 'alternativeBackground04'}
+      padding={isSmall ? ['spacing24', 'spacing0'] : ['spacing24', 'spacing56']}
+      radius={isSmall ? undefined : 'radius48'}
+      background={isSmall ? 'mainBackground' : 'alternativeBackground04'}
       borderColor="decorativeBorders"
       border={!isSmall}
     >

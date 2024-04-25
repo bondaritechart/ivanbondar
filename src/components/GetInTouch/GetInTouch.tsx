@@ -37,7 +37,7 @@ export const GetInTouch = () => {
 
   return (
     <WidgetWrapper
-      padding={isSmall ? ['spacing96', 'spacing24'] : 'spacing56'}
+      padding={isSmall ? ['spacing56', 'spacing24'] : 'spacing56'}
       height={isSmall ? 'auto' : 56}
       id="get-in-touch"
     >
@@ -56,7 +56,7 @@ export const GetInTouch = () => {
             related topics. If you have any questions or just want to say hi, that&apos;s cool too.
           </Text>
         </Stack>
-        <Flex justify={isSmall ? 'flex-start' : 'flex-end'} gap="spacing16">
+        <Flex wrap={isSmall ? 'wrap' : 'nowrap'} justify={isSmall ? 'flex-start' : 'flex-end'} gap="spacing16">
           {GET_IN_TOUCH_LINKS.map((props) => (
             <IconLink key={props.href} target="_blank" {...props} />
           ))}

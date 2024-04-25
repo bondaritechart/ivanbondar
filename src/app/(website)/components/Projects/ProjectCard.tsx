@@ -27,7 +27,12 @@ export const ProjectCard = ({ project }: { project: Project }) => {
           </Stack>
         </Stack>
         <Flex alignSelf={isSmall ? 'center' : 'flex-end'} justify="center">
-          <Image {...project.image} height={isSmall ? 215 : project.image.height} alt={project.cardTitle} />
+          <Image
+            responsive={isSmall}
+            {...project.image}
+            height={isSmall ? 215 : project.image.height}
+            alt={project.cardTitle}
+          />
         </Flex>
       </Flex>
     </WidgetWrapper>

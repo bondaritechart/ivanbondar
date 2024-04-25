@@ -1,15 +1,25 @@
+'use client'
+
 import { Box, Flex, Image, Stack, Text } from 'components/ui'
 import { ListStyled } from 'components/ui/List/List.styles'
 import { WidgetWrapper } from 'components/ui/WidgetWrapper/WidgetWrapper'
 import { CAREER } from 'data/career'
+import { useMediaQuery } from 'hooks/useMediaQuery'
 
 import image from 'assets/images/about-hero.svg'
 
 const AboutPage = () => {
+  const { isSmall } = useMediaQuery()
+
   return (
     <Stack gap="spacing24">
-      <WidgetWrapper padding="spacing56" height={64}>
-        <Flex template={[1, 1]} align="flex-end" gap="spacing120">
+      <WidgetWrapper padding={isSmall ? 'spacing24' : 'spacing56'} height={isSmall ? 'auto' : 64}>
+        <Flex
+          template={[1, 1]}
+          align="flex-end"
+          direction={isSmall ? 'column-reverse' : 'row'}
+          gap={isSmall ? 'spacing24' : 'spacing120'}
+        >
           <Stack gap="spacing24">
             <Text type="heading1" color="headingText">
               Career Path
@@ -20,15 +30,15 @@ const AboutPage = () => {
             </Text>
           </Stack>
           <Box>
-            <Image {...image} alt="about me" />
+            <Image responsive={isSmall} {...image} alt="about me" />
           </Box>
         </Flex>
       </WidgetWrapper>
       {CAREER.map((job) => {
         return (
-          <WidgetWrapper key={job.title} padding="spacing56">
+          <WidgetWrapper key={job.title} padding={isSmall ? 'spacing24' : 'spacing56'}>
             <Stack gap="spacing24">
-              <Flex align="flex-start" justify="space-between">
+              <Flex align="flex-start" gap="spacing16" justify="space-between">
                 <Stack>
                   <Text type="heading3" color="headingText">
                     {job.title}
