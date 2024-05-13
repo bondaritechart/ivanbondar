@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "html-to-image": "^1.11.11",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "sudoku-gen": "^1.0.2"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
