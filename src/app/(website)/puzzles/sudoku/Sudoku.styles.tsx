@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 export const TableSudoku = styled.table`
   border-collapse: collapse;
+  background: white;
   tr {
     &:nth-child(3),
     &:nth-child(6) {
@@ -16,8 +17,8 @@ export const TableSudoku = styled.table`
       border-right: 3px solid black;
     }
     border: 1px solid black;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     text-align: center;
     font-size: 36px;
     font-weight: 500;
@@ -26,6 +27,7 @@ export const TableSudoku = styled.table`
 
 export const TableSolutions = styled.table`
   border-collapse: collapse;
+  background: white;
   tr {
     &:nth-child(3),
     &:nth-child(6) {
@@ -38,10 +40,10 @@ export const TableSolutions = styled.table`
       border-right: 3px solid black;
     }
     border: 1px solid black;
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
   }
 `

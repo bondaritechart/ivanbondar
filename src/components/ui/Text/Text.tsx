@@ -10,6 +10,7 @@ export interface TextProps {
   type?: keyof typeof textTypes
   color?: keyof DefaultTheme['colors']
   align?: CSSProperties['textAlign']
+  transform?: CSSProperties['textTransform']
 }
 
 export const Text = styled.p<TextProps>`
@@ -17,4 +18,5 @@ export const Text = styled.p<TextProps>`
   color: ${({ color, theme }) => theme.colors[color || 'secondaryText']};
   font-family: ${inter.style.fontFamily};
   ${({ align }) => align && `text-align: ${align};`}
+  ${({ transform }) => transform && `text-transform: ${transform};`}
 `
