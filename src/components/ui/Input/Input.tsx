@@ -11,7 +11,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const Input = ({ label, ...props }: InputProps) => {
   return (
     <label>
-      <Stack gap="spacing8">
+      <Stack gap="spacing4">
         <Text type="body">{label}</Text>
         <StyledInput {...props} />
       </Stack>

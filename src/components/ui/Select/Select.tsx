@@ -15,7 +15,7 @@ interface SelectProps extends React.InputHTMLAttributes<HTMLSelectElement> {
 export const Select = ({ label, options, ...props }: SelectProps) => {
   return (
     <label>
-      <Stack gap="spacing8">
+      <Stack gap="spacing4">
         <Text type="body">{label}</Text>
         <StyledSelect {...props}>
           {options.map((option) => (

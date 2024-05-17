@@ -7,6 +7,7 @@ import { Theme } from 'theme'
 interface ButtonProps {
   variant?: keyof typeof variants
   radius?: keyof Theme['radius']
+  width?: string
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -19,5 +20,6 @@ export const Button = styled.button<ButtonProps>`
   transition: all 0.3s ease;
   display: inline-block;
   text-decoration: none !important;
+  ${({ width }) => width && { width: width }}
   ${({ variant }) => variants[variant || 'primary']}
 `

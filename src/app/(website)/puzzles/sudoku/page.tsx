@@ -1,42 +1,35 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import { PerPage, SudokuPuzzle } from 'app/(website)/puzzles/sudoku/Sudoku.types'
 import { PuzzleHtml } from 'app/(website)/puzzles/sudoku/components/PuzzleHtml'
-import { getPNG, getPuzzle } from 'app/(website)/puzzles/utils/sudoku'
+import { PuzzlePdf } from 'app/(website)/puzzles/sudoku/components/PuzzlePdf/PuzzlePdf'
+import { getPuzzleMatrix } from 'app/(website)/puzzles/utils/sudoku'
 import { Box, Button, Flex, Input, Select, Stack } from 'components/ui'
 import { getSudoku } from 'sudoku-gen'
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 
-const Page = () => {
-  const [puzzles, setPuzzles] = useState<Array<{ matrixPuzzle: string[][]; matrixSolution: string[][] }>>([])
+const SudokuPage = () => {
+  const [puzzles, setPuzzles] = useState<Array<SudokuPuzzle>>([])
   const [currentPosition, setCurrentPosition] = useState(1)
   const [difficulty, setDifficulty] = useState<Difficulty>('easy')
   const [generateCount, setGenerateCount] = useState(18)
+  const [puzzlesPerPage, setPuzzlesPerPage] = useState(PerPage.NINE)
 
   const generatePuzzles = () => {
     const puzzles = Array.from({ length: generateCount }, () => getSudoku(difficulty))
-    const convertedPuzzles = puzzles.map((puzzle) => getPuzzle(puzzle))
+    const convertedPuzzles = puzzles.map((puzzle) => getPuzzleMatrix(puzzle))
     setPuzzles(convertedPuzzles)
   }
 
-  const puzzlesRef = useRef(null)
-  const puzzlesRef2 = useRef(null)
-  const solutionsRef = useRef(null)
-  const htmlToImageConvert = () => {
-    getPNG(`puzzles-${currentPosition}-${currentPosition + generateCount / 2 - 1}-${difficulty}`, puzzlesRef)
-    getPNG(
-      `puzzles-${currentPosition + generateCount / 2}-${currentPosition + generateCount - 1}-${difficulty}`,
-      puzzlesRef2,
-    )
-    getPNG(`solutions-${currentPosition}-${currentPosition + generateCount - 1}-${difficulty}`, solutionsRef)
-  }
+  const perPageOptions = Object.entries(PerPage).map(([key, value]) => ({ value, label: key }))
 
   return (
     <Box padding={['spacing120', 'spacing0', 'spacing0']}>
-      <Stack gap="spacing56">
-        <Flex align="flex-end" gap="spacing8">
-          <Button onClick={generatePuzzles}>Generate</Button>
+      <Flex template={[1, 1]}>
+        <Stack gap="spacing16">
           <Input
             label="Start with"
             value={currentPosition}
@@ -54,57 +47,47 @@ const Page = () => {
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value as Difficulty)}
           />
-          <Button onClick={htmlToImageConvert}>Download PNG</Button>
+          <Select
+            label="Puzzles per page"
+            options={perPageOptions}
+            value={puzzlesPerPage}
+            onChange={(e) => setPuzzlesPerPage(e.target.value as PerPage)}
+          />
+          <Button onClick={generatePuzzles}>Generate</Button>
+
+          <PDFDownloadLink
+            fileName={`puzzles-${currentPosition}-${currentPosition + generateCount - 1}-${difficulty}.pdf`}
+            document={
+              <PuzzlePdf
+                perPage={puzzlesPerPage}
+                currentPosition={currentPosition}
+                difficulty={difficulty}
+                puzzles={puzzles}
+              />
+            }
+          >
+            {({ loading }) => (
+              <Button width="100%" disabled={!puzzles.length || loading}>
+                {loading ? 'Loading...' : 'Download PDF'}
+              </Button>
+            )}
+          </PDFDownloadLink>
+        </Stack>
+        <Flex direction="column" align="flex-end">
+          {puzzles.length ? (
+            <PuzzleHtml
+              difficulty={difficulty}
+              currentPosition={currentPosition}
+              index={0}
+              matrix={puzzles[0].matrixPuzzle}
+              tableComponent="puzzle"
+              title="Example"
+            />
+          ) : null}
         </Flex>
-        <Box width="1440px">
-          <Stack gap="spacing24">
-            <Flex justify="space-between" ref={puzzlesRef} gap="spacing24" id="p1" wrap="wrap">
-              {puzzles.slice(0, generateCount / 2).map((puzzle, index) => {
-                return (
-                  <PuzzleHtml
-                    key={index}
-                    difficulty={difficulty}
-                    currentPosition={currentPosition}
-                    index={index}
-                    matrix={puzzle.matrixPuzzle}
-                    tableComponent="puzzle"
-                  />
-                )
-              })}
-            </Flex>
-            <Flex justify="space-between" ref={puzzlesRef2} gap="spacing24" id="p2" wrap="wrap">
-              {puzzles.slice(generateCount / 2).map((puzzle, index) => {
-                return (
-                  <PuzzleHtml
-                    key={index}
-                    difficulty={difficulty}
-                    currentPosition={currentPosition}
-                    index={index}
-                    matrix={puzzle.matrixPuzzle}
-                    tableComponent="puzzle"
-                  />
-                )
-              })}
-            </Flex>
-            <Flex justify="space-between" id="sol" ref={solutionsRef} gap="spacing24" wrap="wrap">
-              {puzzles.map((puzzle, index) => {
-                return (
-                  <PuzzleHtml
-                    key={index}
-                    difficulty={difficulty}
-                    currentPosition={currentPosition}
-                    index={index}
-                    matrix={puzzle.matrixSolution}
-                    tableComponent="solution"
-                  />
-                )
-              })}
-            </Flex>
-          </Stack>
-        </Box>
-      </Stack>
+      </Flex>
     </Box>
   )
 }
 
-export default Page
+export default SudokuPage

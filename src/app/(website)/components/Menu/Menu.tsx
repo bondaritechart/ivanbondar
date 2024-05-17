@@ -35,7 +35,7 @@ export const Menu = () => {
       radius={isSmall ? undefined : 'radius48'}
       background={isSmall ? 'mainBackground' : 'alternativeBackground04'}
       borderColor="decorativeBorders"
-      border={!isSmall}
+      $border={!isSmall}
     >
       <nav>
         <Flex justify="space-between" align="center">

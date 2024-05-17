@@ -8,7 +8,7 @@ export type Padding = Spacing | Spacing[]
 
 export interface BoxProps {
   padding?: Padding
-  border?: boolean
+  $border?: boolean
   radius?: keyof DefaultTheme['radius']
   width?: number | string
   height?: number | string
@@ -18,7 +18,7 @@ export interface BoxProps {
 
 export const Box = styled.div<BoxProps>`
   ${({ theme, padding }) => padding && getPaddingString(getSpacings(padding, theme))}
-  ${({ border }) => border && `border: 1px solid;`}
+  ${({ $border }) => $border && `border: 1px solid;`}
   ${({ radius, theme }) => radius && `border-radius: ${theme.radius[radius]};`}
   ${({ background, theme }) => background && `background: ${theme.colors[background]};`}
   ${({ borderColor, theme }) => borderColor && `border-color: ${theme.colors[borderColor]};`}
