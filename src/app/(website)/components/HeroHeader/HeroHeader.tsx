@@ -20,8 +20,7 @@ export const HeroHeader = () => {
       >
         <CopyWrapper gap="spacing24">
           <Stack gap="spacing8">
-            <Text type="body">Hey, I&apos;m Ivan</Text>
-            <Text as="h1" color="headingText" type="heading1">
+            <Text as="h1" color="headingText" type={isSmall ? 'heading2' : 'heading1'}>
               Welcome to the world of digital possibilities!
             </Text>
           </Stack>

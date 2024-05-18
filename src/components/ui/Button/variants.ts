@@ -11,6 +11,9 @@ export const primary = css`
     background: #7129cc;
     box-shadow: 2px 2px 4px 0px rgba(34, 20, 51, 0.24) inset;
   }
+  &:disabled {
+    background: ${({ theme }) => theme.colors.disabled};
+  }
 `
 export const transparent = css`
   background: transparent;
