@@ -9,23 +9,16 @@ import { useMediaQuery } from 'hooks/useMediaQuery'
 
 import Logo from 'assets/images/logo.svg'
 
-const LINKS = [
-  {
-    href: '/ivan_bondar_cv.pdf',
-    label: 'CV',
-    target: '_blank',
-  },
-  {
-    href: Routes.PORTFOLIO,
-    label: 'Portfolio',
-  },
-  {
-    href: Routes.CAREER,
-    label: 'Career',
-  },
-]
+interface MenuProps {
+  links: Array<{
+    label: string
+    href: string
+    target?: string
+  }>
+  homepageLink?: string
+}
 
-export const Menu = () => {
+export const Menu = ({ links, homepageLink }: MenuProps) => {
   const { isSmall } = useMediaQuery()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -39,7 +32,7 @@ export const Menu = () => {
     >
       <nav>
         <Flex justify="space-between" align="center">
-          <Link href={Routes.ROOT}>
+          <Link href={homepageLink || Routes.ROOT}>
             <Image src={Logo.src} width={Logo.width} height={Logo.height} alt="logo" />
           </Link>
           <LinksWrapper active={isMenuOpen} gap="spacing16" align="center">
@@ -51,7 +44,7 @@ export const Menu = () => {
               </Hamburger>
             )}
             <List>
-              {LINKS.map((link) => {
+              {links.map((link) => {
                 return (
                   <li key={link.href}>
                     <Link href={link.href} target={link.target}>

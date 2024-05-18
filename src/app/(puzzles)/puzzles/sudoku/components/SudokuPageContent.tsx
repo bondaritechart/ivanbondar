@@ -9,15 +9,15 @@ import {
   SudokuPuzzle,
   difficultyOptions,
   perPageOptions,
-} from 'app/(website)/puzzles/sudoku/Sudoku.types'
-import { PuzzleHtml } from 'app/(website)/puzzles/sudoku/components/PuzzleHtml'
-import { PuzzlePdf } from 'app/(website)/puzzles/sudoku/components/PuzzlePdf/PuzzlePdf'
-import { getPuzzleMatrix } from 'app/(website)/puzzles/utils/sudoku'
+} from 'app/(puzzles)/puzzles/sudoku/Sudoku.types'
+import { PuzzleHtml } from 'app/(puzzles)/puzzles/sudoku/components/PuzzleHtml'
+import { PuzzlePdf } from 'app/(puzzles)/puzzles/sudoku/components/PuzzlePdf/PuzzlePdf'
+import { getPuzzleMatrix } from 'app/(puzzles)/puzzles/utils/sudoku'
 import { Box, Button, Flex, Input, Select, Stack } from 'components/ui'
 import { getSudoku } from 'sudoku-gen'
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 
-const SudokuPage = () => {
+export const SudokuPageContent = () => {
   const [puzzles, setPuzzles] = useState<Array<SudokuPuzzle>>([])
 
   const difficultyRef = useRef<HTMLSelectElement>(null)
@@ -82,5 +82,3 @@ const SudokuPage = () => {
     </Box>
   )
 }
-
-export default SudokuPage

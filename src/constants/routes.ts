@@ -4,3 +4,8 @@ export enum Routes {
   PORTFOLIO = '/#portfolio',
   CAREER = '/career',
 }
+
+export enum PuzzleRoutes {
+  PUZZLES_HOME = '/puzzles',
+  SUDOKU = '/puzzles/sudoku',
+}

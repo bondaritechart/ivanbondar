@@ -2,7 +2,7 @@
 
 import { PropsWithChildren } from 'react'
 
-import { TableSolutions, TableSudoku } from 'app/(website)/puzzles/sudoku/Sudoku.styles'
+import { TableSolutions, TableSudoku } from 'app/(puzzles)/puzzles/sudoku/Sudoku.styles'
 import { Stack, Text } from 'components/ui'
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 

@@ -3,7 +3,7 @@
 import { PropsWithChildren } from 'react'
 
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import { PerPageEnum, SudokuPuzzle } from 'app/(website)/puzzles/sudoku/Sudoku.types'
+import { PerPageEnum, SudokuPuzzle } from 'app/(puzzles)/puzzles/sudoku/Sudoku.types'
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 
 interface PuzzlePdfProps extends PropsWithChildren {
