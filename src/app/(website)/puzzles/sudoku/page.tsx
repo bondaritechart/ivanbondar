@@ -1,9 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { PDFDownloadLink } from '@react-pdf/renderer'
-import { PerPage, SudokuPuzzle } from 'app/(website)/puzzles/sudoku/Sudoku.types'
+import {
+  DifficultyEnum,
+  PerPageEnum,
+  SudokuPuzzle,
+  difficultyOptions,
+  perPageOptions,
+} from 'app/(website)/puzzles/sudoku/Sudoku.types'
 import { PuzzleHtml } from 'app/(website)/puzzles/sudoku/components/PuzzleHtml'
 import { PuzzlePdf } from 'app/(website)/puzzles/sudoku/components/PuzzlePdf/PuzzlePdf'
 import { getPuzzleMatrix } from 'app/(website)/puzzles/utils/sudoku'
@@ -13,53 +19,40 @@ import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 
 const SudokuPage = () => {
   const [puzzles, setPuzzles] = useState<Array<SudokuPuzzle>>([])
-  const [currentPosition, setCurrentPosition] = useState(1)
-  const [difficulty, setDifficulty] = useState<Difficulty>('easy')
-  const [generateCount, setGenerateCount] = useState(18)
-  const [puzzlesPerPage, setPuzzlesPerPage] = useState(PerPage.NINE)
+
+  const difficultyRef = useRef<HTMLSelectElement>(null)
+  const perPageRef = useRef<HTMLSelectElement>(null)
+  const currentPositionRef = useRef<HTMLInputElement>(null)
+  const generateCountRef = useRef<HTMLInputElement>(null)
+
+  const difficulty = (difficultyRef.current?.value as Difficulty) || DifficultyEnum.EASY
+  const perPage = (perPageRef.current?.value as PerPageEnum) || PerPageEnum.ONE
+  const currentPosition = parseInt(currentPositionRef.current?.value || '1')
+  const generateCount = parseInt(generateCountRef.current?.value || '1')
 
   const generatePuzzles = () => {
-    const puzzles = Array.from({ length: generateCount }, () => getSudoku(difficulty))
+    const puzzles = Array.from({ length: parseInt(generateCountRef.current?.value || '1') }, () =>
+      getSudoku(difficultyRef.current?.value as Difficulty),
+    )
     const convertedPuzzles = puzzles.map((puzzle) => getPuzzleMatrix(puzzle))
     setPuzzles(convertedPuzzles)
   }
-
-  const perPageOptions = Object.entries(PerPage).map(([key, value]) => ({ value, label: key }))
 
   return (
     <Box padding={['spacing120', 'spacing0', 'spacing0']}>
       <Flex template={[1, 1]}>
         <Stack gap="spacing16">
-          <Input
-            label="Start with"
-            value={currentPosition}
-            onChange={(e) => setCurrentPosition(parseInt(e.target.value))}
-          />
-          <Input label="Amount" value={generateCount} onChange={(e) => setGenerateCount(parseInt(e.target.value))} />
-          <Select
-            label="Difficulty"
-            options={[
-              { value: 'easy', label: 'Easy' },
-              { value: 'medium', label: 'Medium' },
-              { value: 'hard', label: 'Hard' },
-              { value: 'expert', label: 'Expert' },
-            ]}
-            value={difficulty}
-            onChange={(e) => setDifficulty(e.target.value as Difficulty)}
-          />
-          <Select
-            label="Puzzles per page"
-            options={perPageOptions}
-            value={puzzlesPerPage}
-            onChange={(e) => setPuzzlesPerPage(e.target.value as PerPage)}
-          />
-          <Button onClick={generatePuzzles}>Generate</Button>
+          <Input defaultValue={1} label="Start count with" ref={currentPositionRef} />
+          <Input defaultValue={12} label="Amount" ref={generateCountRef} />
+          <Select label="Difficulty" ref={difficultyRef} options={difficultyOptions} />
+          <Select label="Puzzles per page" options={perPageOptions} ref={perPageRef} />
+          <Button onClick={generatePuzzles}>Generate Puzzles</Button>
 
           <PDFDownloadLink
             fileName={`puzzles-${currentPosition}-${currentPosition + generateCount - 1}-${difficulty}.pdf`}
             document={
               <PuzzlePdf
-                perPage={puzzlesPerPage}
+                perPage={perPage}
                 currentPosition={currentPosition}
                 difficulty={difficulty}
                 puzzles={puzzles}

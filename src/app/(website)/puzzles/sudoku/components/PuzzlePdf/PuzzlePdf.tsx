@@ -3,42 +3,42 @@
 import { PropsWithChildren } from 'react'
 
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
-import { PerPage, SudokuPuzzle } from 'app/(website)/puzzles/sudoku/Sudoku.types'
+import { PerPageEnum, SudokuPuzzle } from 'app/(website)/puzzles/sudoku/Sudoku.types'
 import { Difficulty } from 'sudoku-gen/dist/types/difficulty.type'
 
 interface PuzzlePdfProps extends PropsWithChildren {
   difficulty: Difficulty
   currentPosition: number
   puzzles: SudokuPuzzle[]
-  perPage: PerPage
+  perPage: PerPageEnum
 }
 
 const SIZES_MAP = {
-  [PerPage.NINE]: {
+  [PerPageEnum.NINE]: {
     cellSize: 20,
     fontSize: 12,
     titleSize: 14,
     borderWidth: 2,
   },
-  [PerPage.SIX]: {
-    cellSize: 24,
-    fontSize: 12,
+  [PerPageEnum.SIX]: {
+    cellSize: 26,
+    fontSize: 16,
     titleSize: 14,
-    borderWidth: 2,
+    borderWidth: 3,
   },
-  [PerPage.FOUR]: {
+  [PerPageEnum.FOUR]: {
     cellSize: 30,
     fontSize: 18,
     borderWidth: 3,
     titleSize: 18,
   },
-  [PerPage.TWO]: {
+  [PerPageEnum.TWO]: {
     cellSize: 40,
     fontSize: 20,
     borderWidth: 3,
     titleSize: 18,
   },
-  [PerPage.ONE]: {
+  [PerPageEnum.ONE]: {
     cellSize: 60,
     fontSize: 36,
     borderWidth: 3,
@@ -98,6 +98,7 @@ export const PuzzlePdf = ({ difficulty, currentPosition, puzzles, perPage }: Puz
     },
     cellText: {
       fontSize: sizes.fontSize,
+      fontWeight: 'semibold',
     },
     answersCellText: {
       fontSize: 6,
