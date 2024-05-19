@@ -10,7 +10,7 @@ export const WidgetWrapper = styled(Box)`
 `
 
 WidgetWrapper.defaultProps = {
-  border: true,
+  $border: true,
   borderColor: 'decorativeBorders',
   background: 'alternativeBackground',
   radius: 'radius48',
