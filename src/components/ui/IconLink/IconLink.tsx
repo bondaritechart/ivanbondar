@@ -18,7 +18,7 @@ const LinkStyled = styled(Box)`
 
 export const IconLink = ({ icon, ...rest }: IconLinkProps) => {
   return (
-    <LinkStyled as="a" {...rest} radius="radius16" padding={['spacing8', 'spacing24']} borderColor="primary" border>
+    <LinkStyled as="a" {...rest} radius="radius16" padding={['spacing8', 'spacing24']} borderColor="primary" $border>
       {icon}
     </LinkStyled>
   )
