@@ -2,6 +2,7 @@ import React from 'react'
 
 import { PUZZLES_MENU } from 'app/(puzzles)/Puzzles.const'
 import { Menu } from 'app/(website)/components/Menu/Menu'
+import { PageViewTracker } from 'components/PageViewTracker'
 import { PageLayout } from 'components/ui'
 import { PuzzleRoutes } from 'constants/routes'
 import 'theme/global.css'
@@ -15,6 +16,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <PageLayout>
+      <PageViewTracker />
       <Menu homepageLink={PuzzleRoutes.PUZZLES_HOME} links={PUZZLES_MENU} />
       <main>{children}</main>
     </PageLayout>

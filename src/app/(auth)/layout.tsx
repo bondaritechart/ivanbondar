@@ -1,12 +1,8 @@
 import React from 'react'
 
-import { SessionWrapper } from 'lib/SessionWraper'
-import StyledComponentsRegistry from 'lib/registry'
+import { PageLayout } from 'components/ui'
 import type { Metadata } from 'next'
-import ThemeProvider from 'theme/ThemeProvider'
 import 'theme/global.css'
-import { GlobalStyles } from 'theme/globalStyles'
-import { inter } from 'utils/fonts'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,16 +14,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return (
-    <SessionWrapper>
-      <StyledComponentsRegistry>
-        <ThemeProvider>
-          <GlobalStyles />
-          <html lang="en">
-            <body className={inter.className}>{children}</body>
-          </html>
-        </ThemeProvider>
-      </StyledComponentsRegistry>
-    </SessionWrapper>
-  )
+  return <PageLayout>{children}</PageLayout>
 }

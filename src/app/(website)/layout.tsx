@@ -3,6 +3,7 @@ import React from 'react'
 import { Footer } from 'app/(website)/components/Footer/Footer'
 import { Menu } from 'app/(website)/components/Menu/Menu'
 import { GetInTouch } from 'components/GetInTouch/GetInTouch'
+import { PageViewTracker } from 'components/PageViewTracker'
 import { PageLayout, Stack } from 'components/ui'
 import { Routes } from 'constants/routes'
 import type { Metadata } from 'next'
@@ -37,6 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <PageLayout>
+      <PageViewTracker />
       <Menu links={LINKS} />
       <Stack gap="spacing96">
         <main>{children}</main>
