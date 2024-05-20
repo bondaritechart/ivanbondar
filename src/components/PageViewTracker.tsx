@@ -10,7 +10,13 @@ export const PageViewTracker = () => {
   const pathname = usePathname()
   const { triggerEvent } = useAnalyticsEvent()
   useEffect(() => {
-    triggerEvent({ event: AnalyticsEvents.PAGE_VIEW, data: { pathname } })
+    const timer = setTimeout(() => {
+      triggerEvent({ event: AnalyticsEvents.PAGE_VIEW, data: { pathname } })
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+    }
   }, [pathname])
 
   return <></>
