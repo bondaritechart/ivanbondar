@@ -9,13 +9,13 @@ export class WordSearch {
   directions = ['horizontal', 'vertical', 'diagonal', 'diagonalReverse']
 
   constructor(words: string[], gridSize: number) {
-    this.grid = this.generateGrid()
-    this.solution = this.generateGrid()
     this.words = words
     this.gridSize = gridSize
+    this.grid = this.generateGrid()
+    this.solution = this.generateGrid()
   }
 
-  getCharPositions(col: number, row: number, word: string, direction: string) {
+  getCharPositions(col: number, row: number, word: string, direction: string): CharPosition[] {
     const charPositions: CharPosition[] = []
     for (let i = 0; i < word.length; i++) {
       switch (direction) {
@@ -38,7 +38,7 @@ export class WordSearch {
     return charPositions
   }
 
-  getFitsFunction(col: number, row: number, word: string, direction: string) {
+  getFitsFunction(col: number, row: number, word: string, direction: string): boolean {
     switch (direction) {
       case 'horizontal':
         return col + word.length <= this.grid.length
@@ -48,54 +48,60 @@ export class WordSearch {
         return col + word.length <= this.grid.length && row + word.length <= this.grid.length
       case 'diagonalReverse':
       default:
-        return col - word.length >= 0 && row + word.length <= this.grid.length
+        return col - word.length + 1 >= 0 && row + word.length <= this.grid.length
     }
   }
 
-  generateGrid() {
+  generateGrid(): string[][] {
     return Array.from({ length: this.gridSize }, () => Array.from({ length: this.gridSize }, () => ''))
   }
 
-  getStartPosition() {
+  getStartPosition(): [number, number] {
     return [Math.floor(Math.random() * this.grid.length), Math.floor(Math.random() * this.grid.length)]
   }
 
-  getDirection() {
+  getDirection(): string {
     return this.directions[Math.floor(Math.random() * this.directions.length)]
   }
 
-  placeWord(word: string) {
+  placeWord(word: string): void {
     let col: number
     let row: number
     let charPositions: CharPosition[]
     let fits: boolean
+
     if (word.length > this.gridSize) {
       throw new Error('Some words are too long. Increase grid size or remove words that are too long.')
     }
+
     const TRIES = 50
     let count = 0
+
     do {
-      console.log('placing word', word)
       ;[col, row] = this.getStartPosition()
       const direction = this.getDirection()
       charPositions = this.getCharPositions(col, row, word, direction)
       fits = this.getFitsFunction(col, row, word, direction)
+
       if (!fits) {
         continue
       }
-      charPositions.forEach(([char, row, col]) => {
+
+      for (const [char, row, col] of charPositions) {
         if (this.grid[row][col] !== '' && this.grid[row][col] !== char) {
           fits = false
+          break
         }
-      })
+      }
+
       count++
+
       if (count > TRIES) {
         throw new Error('Could not place word')
       }
-      console.log('placed word', word, 'at', row, col, 'direction', direction)
     } while (!fits)
-    for (let i = 0; i < word.length; i++) {
-      const [char, row, col] = charPositions[i]
+
+    for (const [char, row, col] of charPositions) {
       this.grid[row][col] = char
       this.solution[row][col] = char
     }
