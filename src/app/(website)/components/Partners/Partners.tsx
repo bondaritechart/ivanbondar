@@ -16,19 +16,19 @@ const PARTNERS = [
   },
   {
     img: elemy,
-    label: 'iTechArt',
+    label: 'Elemy',
   },
   {
     img: coverwallet,
-    label: 'iTechArt',
+    label: 'Coverwallet',
   },
   {
     img: keeps,
-    label: 'iTechArt',
+    label: 'Keeps',
   },
   {
     img: popsa,
-    label: 'iTechArt',
+    label: 'Popsa',
   },
 ]
 
