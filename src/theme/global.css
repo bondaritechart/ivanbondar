@@ -13,3 +13,18 @@ html {
     background: var(--body-bg);
     scroll-behavior: smooth;
 }
+
+.base-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+}
+
+.base-table td {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    font-size: 24px;
+    text-transform: uppercase;
+}
