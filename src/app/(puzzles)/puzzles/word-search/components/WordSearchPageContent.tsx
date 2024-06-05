@@ -3,43 +3,82 @@
 import { useRef, useState } from 'react'
 
 import { WordSearch } from 'app/(puzzles)/puzzles/utils/WordSearch'
-import { Box, Flex, Input, Stack, Text } from 'components/ui'
+import { Game, Step, WordSearchTheme } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
+import { Box, Button, Flex, Input, Stack, Text } from 'components/ui'
 import { TextFormatter } from 'utils/TextFormatter'
 
 export const WordSearchPageContent = () => {
   const wordsRef = useRef<HTMLTextAreaElement>(null)
   const gridSizeRef = useRef<HTMLInputElement>(null)
+  const themeRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
-  const [grid, setGrid] = useState<string[][]>([])
-  const [solution, setSolution] = useState<string[][]>([])
+  const [themes, setThemes] = useState<WordSearchTheme[]>([])
+  const [step, setStep] = useState<Step>('add_words')
+  const [games, setGames] = useState<Game[]>([])
 
-  const generatePuzzle = () => {
-    const words = wordsRef.current?.value.replace(/\r?\n/g, ',').split(',')
-    if (!words) {
-      return
-    }
+  const generatePuzzles = () => {
     const gridSize = parseInt(gridSizeRef.current?.value || '10')
-    const game = new WordSearch(words, gridSize)
-    const _grid = game.makeGrid()
-    setGrid(_grid.grid)
-    setSolution(_grid.solution)
+    const wsGames: Game[] = []
+    themes.forEach((theme) => {
+      const wordSearch = new WordSearch(theme.words, gridSize)
+      const game = wordSearch.makeGrid()
+      wsGames.push({ theme, ...game })
+    })
+    setGames(wsGames)
+  }
+
+  const addThemeToList = (e) => {
+    e.preventDefault()
+    if (!themeRef.current?.value || !wordsRef.current?.value) {
+      throw new Error('Fill theme and words')
+    }
+    const newTheme: WordSearchTheme = {
+      theme: themeRef.current?.value,
+      words: wordsRef.current?.value.replace(/\r?\n/g, ',').split(','),
+    }
+    setThemes((prev) => [...prev, newTheme])
+    formRef.current?.reset()
   }
 
   return (
     <Box padding={['spacing120', 'spacing0', 'spacing0']}>
       <Stack gap="spacing24">
-        <Flex template={[1, 1]}>
+        <Flex template={[1, 1]} gap="spacing12">
           <Stack>
             <Text as="h2" type="heading2">
               Word Search
             </Text>
-            <Stack gap="spacing12">
-              <Input ref={gridSizeRef} label="Grid Size" type="text" />
-              <textarea ref={wordsRef} name="" id="" cols={30} rows={10} />
-              <button onClick={generatePuzzle}>get</button>
-            </Stack>
+            <form action="" ref={formRef}>
+              <Stack gap="spacing12">
+                {step === 'add_words' && (
+                  <Stack gap="spacing12">
+                    <Input ref={themeRef} label="Theme" type="text" />
+                    <textarea ref={wordsRef} name="" id="" cols={30} rows={10} />
+                    <Button onClick={addThemeToList}>Add theme to list</Button>
+                    <Button onClick={() => setStep('settings')}>Next step</Button>
+                  </Stack>
+                )}
+                {step === 'settings' && (
+                  <Stack gap="spacing12">
+                    <Input ref={gridSizeRef} label="Grid Size" type="text" />
+                    <Button onClick={() => setStep('add_words')}>Go back</Button>
+                    <Button onClick={addThemeToList}>Get puzzles</Button>
+                  </Stack>
+                )}
+              </Stack>
+            </form>
           </Stack>
-          <Stack />
+          <Stack>
+            {themes.map((theme) => {
+              return (
+                <Stack key={theme.theme}>
+                  <Text as="h3">{theme.theme}</Text>
+                  <Text>{theme.words.join(', ')}</Text>
+                </Stack>
+              )
+            })}
+          </Stack>
         </Flex>
         <Flex align="center" gap="spacing56" justify="center">
           <Box>

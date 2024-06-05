@@ -1,3 +1,5 @@
+import { WordSearchGame } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
+
 type CharPosition = [string, number, number]
 
 export class WordSearch {
@@ -107,7 +109,7 @@ export class WordSearch {
     }
   }
 
-  makeGrid() {
+  makeGrid(): WordSearchGame {
     this.words.forEach((word) => {
       this.placeWord(word)
     })
