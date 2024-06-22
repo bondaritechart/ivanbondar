@@ -1,36 +1,59 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 
-import { WordSearchTheme } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
+import { WordSearchState, WordSearchTheme } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
 import { Box, Button, Flex, Input, Stack } from 'components/ui'
 
 interface WordSearchFormProps {
   onSave: (theme: WordSearchTheme) => void
   onRemove: () => void
+  themes: WordSearchState[]
+  themeId: number
 }
 
-export const WordSearchForm = ({ onSave, onRemove }: WordSearchFormProps) => {
-  const wordsRef = useRef<HTMLTextAreaElement>(null)
-  const themeRef = useRef<HTMLInputElement>(null)
-
+export const WordSearchForm = ({ onSave, onRemove, themeId, themes }: WordSearchFormProps) => {
+  const [theme, setTheme] = useState('')
+  const [words, setWords] = useState<string[]>([])
+  const currentTheme = themes.find((theme) => theme.id === themeId)
+  const themeAdded = !!currentTheme?.words.length
+  const themeChanged = currentTheme?.words.join() !== words.join()
   const addThemeToList = (e: any) => {
     e.preventDefault()
-    if (!themeRef.current?.value || !wordsRef.current?.value) {
+    if (!words.length || !theme) {
       throw new Error('Fill theme and words')
     }
     const newTheme: WordSearchTheme = {
-      theme: themeRef.current?.value || '',
-      words: wordsRef.current?.value.replace(/\r?\n/g, ',').split(',') || [],
+      theme,
+      words,
     }
     onSave(newTheme)
+  }
+
+  const getCtaCopy = () => {
+    if (!themeAdded) {
+      return 'Save'
+    }
+    if (themeChanged) {
+      return 'Update'
+    }
+
+    return 'Saved'
   }
 
   return (
     <Box minWidth={40}>
       <Stack gap="spacing12">
-        <Input ref={themeRef} label="Puzzle title" type="text" />
-        <textarea ref={wordsRef} name="" id="" cols={30} rows={10} />
+        <Input onChange={(e) => setTheme(e.target.value)} label="Puzzle title" type="text" />
+        <textarea
+          onChange={(e) => setWords(e.target.value.replace(/\r?\n/g, ',').split(','))}
+          name=""
+          id=""
+          cols={30}
+          rows={10}
+        />
         <Flex gap="spacing24" template={[1, 1]}>
-          <Button onClick={addThemeToList}>Save</Button>
+          <Button disabled={themeAdded && !themeChanged} onClick={addThemeToList}>
+            {getCtaCopy()}
+          </Button>
           <Button onClick={onRemove}>Delete</Button>
         </Flex>
       </Stack>

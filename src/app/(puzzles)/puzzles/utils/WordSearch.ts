@@ -2,19 +2,29 @@ import { WordSearchGame } from 'app/(puzzles)/puzzles/word-search/WordSearch.typ
 
 type CharPosition = [string, number, number]
 
+export type Direction =
+  | 'horizontal'
+  | 'vertical'
+  | 'diagonal'
+  | 'diagonalReverse'
+  | 'horizontal_rtl'
+  | 'vertical_btt'
+  | 'diagonal_btt'
+  | 'diagonalReverse_btt'
+
 export class WordSearch {
   grid: string[][]
   solution: string[][]
   words: string[]
   gridSize: number
+  directions: Direction[]
 
-  directions = ['horizontal', 'vertical', 'diagonal', 'diagonalReverse']
-
-  constructor(words: string[], gridSize: number) {
+  constructor(words: string[], gridSize: number, directions?: Direction[]) {
     this.words = words
     this.gridSize = gridSize
     this.grid = this.generateGrid()
     this.solution = this.generateGrid()
+    this.directions = directions || ['horizontal', 'vertical', 'diagonal', 'diagonalReverse']
   }
 
   getCharPositions(col: number, row: number, word: string, direction: string): CharPosition[] {
@@ -24,15 +34,27 @@ export class WordSearch {
         case 'horizontal':
           charPositions[i] = [word[i], row, col + i]
           break
+        case 'horizontal_rtl':
+          charPositions[i] = [word[i], row, col - i]
+          break
         case 'vertical':
           charPositions[i] = [word[i], row + i, col]
+          break
+        case 'vertical_btt':
+          charPositions[i] = [word[i], row - i, col]
           break
         case 'diagonal':
           charPositions[i] = [word[i], row + i, col + i]
           break
+        case 'diagonal_btt':
+          charPositions[i] = [word[i], row - i, col + i]
+          break
         case 'diagonalReverse':
-        default:
           charPositions[i] = [word[i], row + i, col - i]
+          break
+        case 'diagonalReverse_btt':
+        default:
+          charPositions[i] = [word[i], row - i, col - i]
           break
       }
     }
@@ -40,17 +62,25 @@ export class WordSearch {
     return charPositions
   }
 
-  getFitsFunction(col: number, row: number, word: string, direction: string): boolean {
+  getFitsFunction(col: number, row: number, word: string, direction: Direction): boolean {
     switch (direction) {
       case 'horizontal':
         return col + word.length <= this.grid.length
+      case 'horizontal_rtl':
+        return col - word.length + 1 >= 0
       case 'vertical':
         return row + word.length <= this.grid.length
+      case 'vertical_btt':
+        return row - word.length + 1 >= 0
       case 'diagonal':
         return col + word.length <= this.grid.length && row + word.length <= this.grid.length
+      case 'diagonal_btt':
+        return col + word.length <= this.grid.length && row - word.length + 1 >= 0
       case 'diagonalReverse':
-      default:
         return col - word.length + 1 >= 0 && row + word.length <= this.grid.length
+      case 'diagonalReverse_btt':
+      default:
+        return col - word.length + 1 >= 0 && row - word.length + 1 >= 0
     }
   }
 
@@ -62,7 +92,7 @@ export class WordSearch {
     return [Math.floor(Math.random() * this.grid.length), Math.floor(Math.random() * this.grid.length)]
   }
 
-  getDirection(): string {
+  getDirection(): Direction {
     return this.directions[Math.floor(Math.random() * this.directions.length)]
   }
 

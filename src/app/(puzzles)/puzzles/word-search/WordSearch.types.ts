@@ -15,3 +15,7 @@ export interface WordSearchGame {
 export interface Game extends WordSearchGame {
   theme: WordSearchTheme
 }
+
+export interface WordSearchState extends WordSearchTheme {
+  id: number
+}
