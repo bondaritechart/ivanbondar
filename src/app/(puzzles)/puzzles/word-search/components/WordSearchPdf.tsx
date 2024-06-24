@@ -160,6 +160,7 @@ export const WordSearchPdf = ({ games }: WordSearchPdfProps) => {
       borderColor: 'yellow',
     },
   })
+  console.log('games', games)
 
   return (
     <Document>

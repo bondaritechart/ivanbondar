@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 import { WordSearchState, WordSearchTheme } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
 import { Box, Button, Flex, Input, Stack } from 'components/ui'
@@ -11,15 +12,17 @@ interface WordSearchFormProps {
 }
 
 export const WordSearchForm = ({ onSave, onRemove, themeId, themes }: WordSearchFormProps) => {
-  const [theme, setTheme] = useState('')
-  const [words, setWords] = useState<string[]>([])
   const currentTheme = themes.find((theme) => theme.id === themeId)
+  const [theme, setTheme] = useState(currentTheme?.theme || '')
+  const [words, setWords] = useState<string[]>(currentTheme?.words || [])
   const themeAdded = !!currentTheme?.words.length
   const themeChanged = currentTheme?.words.join() !== words.join()
   const addThemeToList = (e: any) => {
     e.preventDefault()
     if (!words.length || !theme) {
-      throw new Error('Fill theme and words')
+      toast.error('Fill theme and words')
+
+      return
     }
     const newTheme: WordSearchTheme = {
       theme,
@@ -42,13 +45,14 @@ export const WordSearchForm = ({ onSave, onRemove, themeId, themes }: WordSearch
   return (
     <Box minWidth={40}>
       <Stack gap="spacing12">
-        <Input onChange={(e) => setTheme(e.target.value)} label="Puzzle title" type="text" />
+        <Input onChange={(e) => setTheme(e.target.value)} value={theme} label="Puzzle title" type="text" />
         <textarea
           onChange={(e) => setWords(e.target.value.replace(/\r?\n/g, ',').split(','))}
           name=""
           id=""
           cols={30}
           rows={10}
+          value={words.join(',')}
         />
         <Flex gap="spacing24" template={[1, 1]}>
           <Button disabled={themeAdded && !themeChanged} onClick={addThemeToList}>

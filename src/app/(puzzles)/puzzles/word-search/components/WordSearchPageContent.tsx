@@ -1,8 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import { PDFDownloadLink } from '@react-pdf/renderer'
+import { usePDF } from '@react-pdf/renderer'
 import { Direction, WordSearch } from 'app/(puzzles)/puzzles/utils/WordSearch'
 import { Game, WordSearchState } from 'app/(puzzles)/puzzles/word-search/WordSearch.types'
 import { WordSearchForm } from 'app/(puzzles)/puzzles/word-search/components/WordSearchForm'
@@ -51,7 +51,7 @@ export const WordSearchPageContent = () => {
   const [themes, setThemes] = useState<WordSearchState[]>([])
   const [games, setGames] = useState<Game[]>([])
   const [directions, setDirections] = useState<Direction[]>([])
-
+  const [instance, updateInstance] = usePDF({ document: <WordSearchPdf games={games} /> })
   const generatePuzzles = (e: any) => {
     e.preventDefault()
     const gridSize = parseInt(gridSizeRef.current?.value || '30')
@@ -63,6 +63,12 @@ export const WordSearchPageContent = () => {
     })
     setGames(wsGames)
   }
+
+  useEffect(() => {
+    if (games.length) {
+      updateInstance(<WordSearchPdf games={games} />)
+    }
+  }, [games])
 
   const addNewTheme = () => {
     setThemes((prev) => {
@@ -77,6 +83,12 @@ export const WordSearchPageContent = () => {
     })
   }
 
+  const removeAll = () => {
+    localStorage.removeItem('ws-games')
+    setGames([])
+    setThemes([])
+  }
+
   const removeTheme = (id: number) => {
     const newThemes = themes.filter((t) => {
       return id !== t.id
@@ -84,9 +96,17 @@ export const WordSearchPageContent = () => {
     setThemes(newThemes)
   }
 
+  useEffect(() => {
+    const storedThemes = localStorage.getItem('ws-games')
+    if (storedThemes) {
+      setThemes(JSON.parse(storedThemes))
+    }
+  }, [])
+
   const saveTheme = (theme: WordSearchState, index: number) => {
     const newThemes = [...themes]
     newThemes[index] = theme
+    localStorage.setItem('ws-games', JSON.stringify(newThemes))
     setThemes(newThemes)
   }
 
@@ -114,13 +134,9 @@ export const WordSearchPageContent = () => {
             </Button>
           </Box>
           <Box>
-            <PDFDownloadLink fileName="word-search.pdf" document={<WordSearchPdf games={games} />}>
-              {({ loading }) => (
-                <Button width="100%" type="button" disabled={loading}>
-                  {loading ? 'Loading...' : 'Download PDF'}
-                </Button>
-              )}
-            </PDFDownloadLink>
+            <Button width="100%" target="_blank" as="a" href={instance.url || undefined} disabled={instance.loading}>
+              {instance.loading ? 'Loading...' : 'Download PDF'}
+            </Button>
           </Box>
         </Flex>
         <Flex gap="spacing24" wrap="wrap">
@@ -137,7 +153,10 @@ export const WordSearchPageContent = () => {
             )
           })}
         </Flex>
-        <Button onClick={addNewTheme}>Add new theme</Button>
+        <Flex gap="spacing24" template={[1, 1]}>
+          <Button onClick={addNewTheme}>Add new theme</Button>
+          <Button onClick={removeAll}>Remove all</Button>
+        </Flex>
         <Flex template={[1, 1, 1]} wrap="wrap" gap="spacing12">
           {themes.map((theme, index) => {
             return (
