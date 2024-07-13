@@ -28,3 +28,19 @@ html {
     font-size: 24px;
     text-transform: uppercase;
 }
+
+#maze {
+    display: grid;
+    grid-template-columns: repeat(20, 20px);
+    gap: 0px;
+    width: 200px;
+}
+.cell {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+}
+.top { border-top: 2px solid black; }
+.right { border-right: 2px solid black; }
+.bottom { border-bottom: 2px solid black; }
+.left { border-left: 2px solid black; }
