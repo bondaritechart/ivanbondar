@@ -37,6 +37,7 @@ export async function middleware(request: NextRequest) {
         },
       })
     } catch (e) {
+      //eslint-disable-next-line
       console.log(e)
     }
   }
