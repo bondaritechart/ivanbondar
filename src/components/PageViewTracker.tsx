@@ -2,7 +2,6 @@
 
 import { useEffect } from 'react'
 
-import { AnalyticsEvents } from 'constants/analytics'
 import { useAnalyticsEvent } from 'hooks/useAnalyticsEvent'
 import { usePathname } from 'next/navigation'
 
@@ -11,7 +10,7 @@ export const PageViewTracker = () => {
   const { triggerEvent } = useAnalyticsEvent()
   useEffect(() => {
     const timer = setTimeout(() => {
-      triggerEvent({ event: AnalyticsEvents.PAGE_VIEW, data: { pathname } })
+      // triggerEvent({ event: AnalyticsEvents.PAGE_VIEW, data: { pathname } })
     }, 500)
 
     return () => {

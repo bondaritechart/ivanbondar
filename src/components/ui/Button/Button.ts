@@ -8,6 +8,8 @@ interface ButtonProps {
   variant?: keyof typeof variants
   radius?: keyof Theme['radius']
   width?: string
+  href?: HTMLAnchorElement['href']
+  target?: HTMLAnchorElement['target']
 }
 
 export const Button = styled.button<ButtonProps>`
@@ -19,6 +21,7 @@ export const Button = styled.button<ButtonProps>`
   border: 0;
   transition: all 0.3s ease;
   display: inline-block;
+  text-align: center;
   text-decoration: none !important;
   ${({ width }) => width && { width: width }}
   ${({ variant }) => variants[variant || 'primary']}

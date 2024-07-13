@@ -6,7 +6,7 @@ import { getSpacings } from 'components/ui/utils'
 import styled, { css } from 'styled-components'
 import { Spacing } from 'theme'
 
-const createTemplate = (values: Array<number | string>, templateRepeat: string) => {
+const createTemplate = (values: Array<number>, templateRepeat: string) => {
   let styles = ''
   const { length } = values
   const nValue = templateRepeat === 'last' ? '' : String(length)
@@ -31,7 +31,7 @@ export interface FlexProps {
   flex?: CSSProperties['flex']
   wrap?: CSSProperties['flexWrap']
   gap?: Spacing
-  template?: Array<number | string>
+  template?: Array<number>
   templateRepeat?: 'last' | 'group'
 }
 

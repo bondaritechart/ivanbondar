@@ -21,20 +21,24 @@ export async function middleware(request: NextRequest) {
       sameSite: 'strict',
       expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
     })
-    await client.mutate({
-      mutation: CREATE_ANALYTICS_EVENT,
-      variables: {
-        input: {
-          event: AnalyticsEvents.NEW_LEAD,
-          data: JSON.stringify({}),
-          path: request.nextUrl.pathname,
-          referrer: request.headers.get('referer'),
-          ip: request.headers.get('x-forwarded-for'),
-          userAgent: request.headers.get('user-agent'),
-          uuid: id,
+    try {
+      await client.mutate({
+        mutation: CREATE_ANALYTICS_EVENT,
+        variables: {
+          input: {
+            event: AnalyticsEvents.NEW_LEAD,
+            data: JSON.stringify({}),
+            path: request.nextUrl.pathname,
+            referrer: request.headers.get('referer'),
+            ip: request.headers.get('x-forwarded-for'),
+            userAgent: request.headers.get('user-agent'),
+            uuid: id,
+          },
         },
-      },
-    })
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return response

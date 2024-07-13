@@ -8,6 +8,7 @@ export const theme = {
     spacing8: '0.8rem',
     spacing12: '1.2rem',
     spacing16: '1.6rem',
+    spacing20: '2rem',
     spacing24: '2.4rem',
     spacing32: '3.2rem',
     spacing40: '4rem',
