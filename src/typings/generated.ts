@@ -14,8 +14,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Analytics = {
-  __typename?: 'Analytics';
+export type AnalyticsEvent = {
+  __typename?: 'AnalyticsEvent';
   data?: Maybe<Scalars['String']['output']>;
   event: Scalars['String']['output'];
   id: Scalars['Float']['output'];
@@ -52,7 +52,7 @@ export type CreateUserInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createAnalyticsEvent: Analytics;
+  createAnalyticsEvent: AnalyticsEvent;
   createProject: Project;
   getNewTokens: NewTokensResponse;
   logout: Scalars['Boolean']['output'];
@@ -128,7 +128,7 @@ export type Project = {
 
 export type Query = {
   __typename?: 'Query';
-  analytics: Array<Analytics>;
+  events: Array<AnalyticsEvent>;
   project: Project;
   projects: Array<Project>;
   user: User;
@@ -192,9 +192,16 @@ export type User = {
   updatedAt: Scalars['String']['output'];
 };
 
+export type GetAllEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllEventsQuery = { __typename?: 'Query', events: Array<{ __typename?: 'AnalyticsEvent', id: number, event: string, uuid: string }> };
+
 export type CreateAnalyticsEventMutationVariables = Exact<{
   input: CreateAnalyticsInput;
 }>;
 
 
-export type CreateAnalyticsEventMutation = { __typename?: 'Mutation', createAnalyticsEvent: { __typename?: 'Analytics', id: number, event: string, uuid: string } };
+export type CreateAnalyticsEventMutation = { __typename?: 'Mutation', createAnalyticsEvent: { __typename?: 'AnalyticsEvent', id: number, event: string, uuid: string } };
+
+export type AnalyticsEventFragment = { __typename?: 'AnalyticsEvent', id: number, event: string, uuid: string };
