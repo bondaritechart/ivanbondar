@@ -2,7 +2,6 @@
 
 import React, { PropsWithChildren } from 'react'
 
-import { PageWrapper } from 'components/ui/PageLayout/PageLayout.styles'
 import { SessionWrapper } from 'lib/SessionWraper'
 import { ApolloWrapper } from 'lib/apollo/ApolloWrapper'
 import StyledComponentsRegistry from 'lib/registry'
@@ -20,9 +19,7 @@ export const PageLayout = async ({ children }: RootLayoutProps) => {
           <ThemeProvider>
             <GlobalStyles />
             <html lang="en">
-              <body className={inter.className}>
-                <PageWrapper>{children}</PageWrapper>
-              </body>
+              <body className={inter.className}>{children}</body>
             </html>
           </ThemeProvider>
         </StyledComponentsRegistry>
