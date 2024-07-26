@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   const analyticsId = request.cookies.get(CookiesNames.ANALYTICS_ID)
   const response = NextResponse.next()
   if (!analyticsId) {
-    const id = uuidv4()
+    const id = uuidv4() // id of a new user session
     response.cookies.set(CookiesNames.ANALYTICS_ID, id, {
       httpOnly: false,
       secure: false,
