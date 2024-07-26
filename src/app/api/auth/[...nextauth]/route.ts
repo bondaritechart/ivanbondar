@@ -9,7 +9,8 @@ const handler = NextAuth({
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize() {
+      async authorize(data) {
+        console.log('authorize', data)
         const user = { id: '1', name: 'J Smith', email: 'jsmith@example.com' }
 
         if (user) {
