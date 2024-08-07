@@ -29,3 +29,9 @@ export const small = css`
   font-size: 1.6rem;
   line-height: normal;
 `
+
+export const smallBold = css`
+  font-size: 1.6rem;
+  line-height: normal;
+  font-weight: 500;
+`

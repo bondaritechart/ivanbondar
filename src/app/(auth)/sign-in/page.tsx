@@ -1,27 +1,33 @@
 'use client'
 
-import { useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
+import axios from 'axios'
 import { Button, Center, Input, Stack, Text } from 'components/ui'
 import { WidgetWrapper } from 'components/ui/WidgetWrapper/WidgetWrapper'
-import { signIn } from 'next-auth/react'
+import { CookiesNames } from 'constants/cookies'
+import { AdminRoutes, ApiRoutes } from 'constants/routes'
+import Cookies from 'js-cookie'
+import { AuthContext } from 'lib/auth/AuthContext'
+import { useRouter } from 'next/navigation'
 
 export default function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const { register, handleSubmit } = useForm()
-
+  const { setAuth } = useContext(AuthContext)
+  const router = useRouter()
   const onLogin = async (data: any) => {
     try {
-      await signIn('credentials', {
-        username: data.username,
-        password: data.password,
-        redirect: false,
+      const user = await axios.post(process.env.NEXT_PUBLIC_API_URL + ApiRoutes.SIGN_IN, data)
+      setAuth(user.data)
+      Cookies.set(CookiesNames.AUTH_TOKEN, user.data.accessToken, {
+        secure: true,
+        sameSite: 'strict',
+        expires: 20,
       })
+      router.push(AdminRoutes.ADMIN)
     } catch (error) {
-      console.error('Sign in failed', error)
+      console.log('Sign in failed', error)
     }
   }
 

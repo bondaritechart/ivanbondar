@@ -2,8 +2,8 @@
 
 import React, { PropsWithChildren } from 'react'
 
-import { SessionWrapper } from 'lib/SessionWraper'
 import { ApolloWrapper } from 'lib/apollo/ApolloWrapper'
+import { AuthWrapper } from 'lib/auth/AuthWrapper'
 import StyledComponentsRegistry from 'lib/registry'
 import ThemeProvider from 'theme/ThemeProvider'
 import { GlobalStyles } from 'theme/globalStyles'
@@ -13,7 +13,7 @@ interface RootLayoutProps extends PropsWithChildren {}
 
 export const PageLayout = async ({ children }: RootLayoutProps) => {
   return (
-    <SessionWrapper>
+    <AuthWrapper>
       <ApolloWrapper>
         <StyledComponentsRegistry>
           <ThemeProvider>
@@ -24,6 +24,6 @@ export const PageLayout = async ({ children }: RootLayoutProps) => {
           </ThemeProvider>
         </StyledComponentsRegistry>
       </ApolloWrapper>
-    </SessionWrapper>
+    </AuthWrapper>
   )
 }
