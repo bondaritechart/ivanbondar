@@ -3,6 +3,7 @@
 import { CSSProperties } from 'react'
 
 import { getSpacings } from 'components/ui/utils'
+import { motion } from 'framer-motion'
 import styled, { css } from 'styled-components'
 import { Spacing } from 'theme'
 
@@ -35,7 +36,7 @@ export interface FlexProps {
   templateRepeat?: 'last' | 'group'
 }
 
-export const Flex = styled.div<FlexProps>`
+export const Flex = styled(motion.div)<FlexProps>`
   display: flex;
   ${({ gap, theme }) => gap && `gap: ${getSpacings(gap, theme)};`};
   ${({ direction }) => direction && `flex-direction: ${direction};`}

@@ -2,10 +2,11 @@
 
 import React from 'react'
 
-import NextImage, { ImageProps as NextImageProps } from 'next/image'
+import { HTMLMotionProps, motion } from 'framer-motion'
+// import { ImageProps as NextImageProps } from 'next/image'
 import styled from 'styled-components'
 
-interface ImageProps extends NextImageProps {
+interface ImageProps extends HTMLMotionProps<'img'> {
   responsive?: boolean
 }
 
@@ -16,14 +17,16 @@ const ResponsiveWrapper = styled.div`
   }
 `
 
-export const Image = (props: ImageProps) => {
-  if (props.responsive) {
+const AnimatedImg = motion.img
+
+export const Image = ({ responsive, ...props }: ImageProps) => {
+  if (responsive) {
     return (
       <ResponsiveWrapper>
-        <NextImage {...props} />
+        <AnimatedImg {...props} />
       </ResponsiveWrapper>
     )
   }
 
-  return <NextImage {...props} />
+  return <AnimatedImg {...props} />
 }
