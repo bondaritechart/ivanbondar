@@ -4,6 +4,7 @@ import { Footer } from 'app/(website)/components/Footer/Footer'
 import { Menu } from 'app/(website)/components/Menu/Menu'
 import { GetInTouch } from 'components/GetInTouch/GetInTouch'
 import { PageLayout, Stack } from 'components/ui'
+import { PageWrapper } from 'components/ui/PageLayout/PageLayout.styles'
 import { Routes } from 'constants/routes'
 import type { Metadata } from 'next'
 import 'theme/global.css'
@@ -37,14 +38,16 @@ export default function RootLayout({
 }>) {
   return (
     <PageLayout>
-      <Menu links={LINKS} />
-      <Stack gap="spacing96">
-        <main>{children}</main>
-        <Stack gap="spacing48">
-          <GetInTouch />
-          <Footer />
+      <PageWrapper>
+        <Menu links={LINKS} />
+        <Stack gap="spacing96">
+          <main>{children}</main>
+          <Stack gap="spacing48">
+            <GetInTouch />
+            <Footer />
+          </Stack>
         </Stack>
-      </Stack>
+      </PageWrapper>
     </PageLayout>
   )
 }

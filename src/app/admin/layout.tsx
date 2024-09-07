@@ -1,6 +1,14 @@
 import React from 'react'
 
-import { PageLayout } from 'components/ui'
+import {
+  AdminContentPositioner,
+  AdminPageContentWrapper,
+  AdminPageWrapper,
+} from 'app/admin/components/AdminLayout.styles'
+import { SideBar } from 'app/admin/components/SideBar'
+import { TopNav } from 'app/admin/components/TopNav'
+import { AuthGuard } from 'app/admin/guards/AuthGuard'
+import { Flex, PageLayout } from 'components/ui'
 import type { Metadata } from 'next'
 import 'theme/global.css'
 
@@ -14,5 +22,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <PageLayout>{children}</PageLayout>
+  return (
+    <PageLayout>
+      <AuthGuard>
+        <AdminPageWrapper>
+          <TopNav />
+          <Flex flex={1}>
+            <SideBar />
+            <AdminContentPositioner>
+              <AdminPageContentWrapper>{children}</AdminPageContentWrapper>
+            </AdminContentPositioner>
+          </Flex>
+        </AdminPageWrapper>
+      </AuthGuard>
+    </PageLayout>
+  )
 }

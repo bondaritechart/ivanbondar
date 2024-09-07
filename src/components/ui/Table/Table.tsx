@@ -1,4 +1,6 @@
 import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { TableStyled, Td, Th, Thead, Tr } from 'components/ui/Table/Table.styles'
+import { Text } from 'components/ui/Text/Text'
 
 interface TableProps<T> {
   data: T[]
@@ -22,33 +24,37 @@ export const Table = <T extends object>({ data, columns }: TableProps<T>) => {
   })
 
   return (
-    <table>
-      <thead>
+    <TableStyled>
+      <Thead>
         {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
+          <Tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => {
               return (
-                <th key={header.id} colSpan={header.colSpan}>
+                <Th key={header.id} colSpan={header.colSpan}>
                   {header.isPlaceholder ? null : (
-                    <div>{flexRender(header.column.columnDef.header, header.getContext())}</div>
+                    <Text type="smallBold">{flexRender(header.column.columnDef.header, header.getContext())}</Text>
                   )}
-                </th>
+                </Th>
               )
             })}
-          </tr>
+          </Tr>
         ))}
-      </thead>
+      </Thead>
       <tbody>
         {table.getRowModel().rows.map((row) => {
           return (
-            <tr key={row.id}>
+            <Tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
-                return <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                return (
+                  <Td key={cell.id}>
+                    <Text type="small">{flexRender(cell.column.columnDef.cell, cell.getContext())}</Text>
+                  </Td>
+                )
               })}
-            </tr>
+            </Tr>
           )
         })}
       </tbody>
-    </table>
+    </TableStyled>
   )
 }

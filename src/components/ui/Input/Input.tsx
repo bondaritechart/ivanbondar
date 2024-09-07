@@ -15,7 +15,7 @@ export const Input = forwardRef(({ label, ...props }: InputProps, ref: Forwarded
     <label>
       <Stack gap="spacing4">
         <Text type="body">{label}</Text>
-        <StyledInput ref={ref} {...props} />
+        <StyledInput {...props} ref={ref} />
       </Stack>
     </label>
   )
