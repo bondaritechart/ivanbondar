@@ -32,6 +32,36 @@ const PARTNERS = [
   },
 ]
 
+const frameVariants = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+
+    transition: {
+      duration: 1,
+      staggerChildren: 0.3,
+      ease: [0.02, 0.6, 0.01, 0.91],
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: {
+    opacity: 0,
+    y: 100,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 2,
+      ease: [0.02, 0.6, 0.01, 0.91],
+    },
+  },
+}
+
 export const Partners = () => {
   const { isSmall } = useMediaQuery()
 
@@ -45,9 +75,19 @@ export const Partners = () => {
         align="center"
         justify={isSmall ? 'space-around' : 'space-between'}
         wrap="wrap"
+        variants={frameVariants}
+        initial="hidden"
+        animate="visible"
       >
         {PARTNERS.map(({ img, label }) => (
-          <Image alt={label} key={label} src={img.src} width={img.width} height={isSmall ? 35 : img.height} />
+          <Image
+            variants={itemVariants}
+            alt={label}
+            key={label}
+            src={img.src}
+            width={img.width}
+            height={isSmall ? 35 : img.height}
+          />
         ))}
       </Flex>
     </Stack>

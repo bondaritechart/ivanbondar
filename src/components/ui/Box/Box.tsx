@@ -1,6 +1,7 @@
 'use client'
 
 import { getPaddingString, getSpacings } from 'components/ui/utils'
+import { motion } from 'framer-motion'
 import styled, { DefaultTheme } from 'styled-components'
 import { Spacing } from 'theme'
 
@@ -17,7 +18,7 @@ export interface BoxProps {
   background?: keyof DefaultTheme['colors']
 }
 
-export const Box = styled.div<BoxProps>`
+export const Box = styled(motion.div)<BoxProps>`
   ${({ theme, padding }) => padding && getPaddingString(getSpacings(padding, theme))}
   ${({ $border }) => $border && `border: 1px solid;`}
   ${({ radius, theme }) => radius && `border-radius: ${theme.radius[radius]};`}

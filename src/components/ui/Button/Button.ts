@@ -1,6 +1,7 @@
 'use client'
 
 import * as variants from 'components/ui/Button/variants'
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 import { Theme } from 'theme'
 
@@ -12,7 +13,7 @@ interface ButtonProps {
   target?: HTMLAnchorElement['target']
 }
 
-export const Button = styled.button<ButtonProps>`
+export const Button = styled(motion.button)<ButtonProps>`
   border-radius: ${({ radius = 'radius16', theme }) => theme.radius[radius]};
   padding: ${({ theme }) => `${theme.spacing.spacing16} ${theme.spacing.spacing24}`};
   cursor: pointer;
